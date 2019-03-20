@@ -1,5 +1,8 @@
 # flask-subcommand-issue
-Minimal test example for flask / click subcommand problem
+Minimal test example for flask / click subcommand problem.
+
+I asked this as a question on Stack Overflow - this is the minimal example to demonstrate the problem.
+See https://stackoverflow.com/questions/55270786/how-to-make-a-flask-app-run-as-a-click-subcommand
 
 ## Use case
 I have a python package using a `click` group to have multiple command line subcommands.
@@ -127,6 +130,6 @@ I also don't want to pollute my main command group with the flask subcommands
 (in reality I have a lot more subcommands in the main group).
 
 ### The question
-What do I need to do to make this work as I intend?
+What do I need to do to make this work as I intend, without having to define `FLASK_APP` and as a nested group in click?
 
 Thank you in advance for any help!
