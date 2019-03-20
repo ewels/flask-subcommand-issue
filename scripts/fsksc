@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import click
+import fsksc.server
+
+@click.group()
+def fsksc_cli():
+    pass
+
+@fsksc_cli.command()
+def cmd1():
+    print("Command one")
+
+@fsksc_cli.command()
+def cmd2():
+    print("Command two")
+
+# Import the flask commands under the nf-core monitor cli group
+fsksc_cli.add_command(fsksc.server.app.server)
+
+if __name__ == '__main__':
+    fsksc_cli()
