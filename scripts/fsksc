@@ -1,13 +1,7 @@
 #!/usr/bin/env python
 
 import click
-import flask
 import fsksc.server
-import os
-
-# Set env variable FLASK_APP so that the flask server can run as a click subcommand
-flaskenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'fsksc', 'server', '.flaskenv')
-flask.cli.load_dotenv(flaskenv_path)
 
 @click.group()
 def fsksc_cli():
