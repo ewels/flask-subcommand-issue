@@ -129,7 +129,13 @@ _But_ - I don't want to have to get my users to do this!
 I also don't want to pollute my main command group with the flask subcommands
 (in reality I have a lot more subcommands in the main group).
 
-### The question
-What do I need to do to make this work as I intend, without having to define `FLASK_APP` and as a nested group in click?
+## The solution
+Answered by _Grey Li_ on Stack Overflow! https://stackoverflow.com/a/55272314/713980
 
-Thank you in advance for any help!
+In fact, the answer had been staring me in the face in the flask documentation the whole time:
+http://flask.pocoo.org/docs/1.0/cli/#environment-variables-from-dotenv
+
+TL;DR; - add `python-dotenv` as a dependency, create a `.flaskenv` file with the `FLASK_APP` variable
+and load this in the main script by using `flask.cli.load_dotenv(path)`.
+
+Easy when you know how! Thanks for the help _Grey Li_!
