@@ -129,7 +129,31 @@ _But_ - I don't want to have to get my users to do this!
 I also don't want to pollute my main command group with the flask subcommands
 (in reality I have a lot more subcommands in the main group).
 
-### The question
-What do I need to do to make this work as I intend, without having to define `FLASK_APP` and as a nested group in click?
+## Solution 1
+Answered by _Grey Li_ on Stack Overflow: https://stackoverflow.com/a/55272314/713980
 
-Thank you in advance for any help!
+Flask can load environment variables from a file using the `python-dotenv` package:
+http://flask.pocoo.org/docs/1.0/cli/#environment-variables-from-dotenv
+
+TL;DR; - add `python-dotenv` as a dependency, create a `.flaskenv` file with the `FLASK_APP` variable
+and load this in the main script by using `flask.cli.load_dotenv(path)`.
+
+The problem with this approach is that flask loads `FLASK_APP` using the _working directory_  as the root
+for any relative paths. This means that the contents of that file has to either be absolute (and won't work
+for other users installing the package) or the server has to be run from the correct directory.
+
+## Solution 2
+Sometimes the best solutions are the simplest. Using the builtin python `os` library, you can set
+environment variables. I'd tried this before with no success, but the key is that it has to be set
+very early on in execution. Specifically, in the main launch script, immediately after imports.
+
+Now we can define the path to the flask app dynamically, based on the location of the installed script.
+This should work for anyone installing the package. We set this to `FLASK_APP` and everything seems to work!
+
+```python
+flaskenv_app_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'fsksc', 'server', 'app.py')
+flaskenv_app_func = '{}:create_fsksc_app'.format(flaskenv_app_path)
+os.environ['FLASK_APP'] = flaskenv_app_func
+```
+
+> Again: the location of this code is key. It has to be immediately after Python execution begins.
