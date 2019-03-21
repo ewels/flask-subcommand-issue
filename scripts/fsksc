@@ -2,6 +2,11 @@
 
 import click
 import fsksc.server
+import os
+
+flaskenv_app_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'fsksc', 'server', 'app.py')
+flaskenv_app_func = '{}:create_fsksc_app'.format(flaskenv_app_path)
+os.environ['FLASK_APP'] = flaskenv_app_func
 
 @click.group()
 def fsksc_cli():
